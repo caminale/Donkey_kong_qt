@@ -2,6 +2,7 @@
 #define GAME_H
 #include "game.h"
 #include "mario.h"
+#include "platform.h"
 #include <QGraphicsView>
 #include <QWidget>
 #include <QGraphicsScene>
@@ -13,6 +14,7 @@ public:
     explicit  Game(QWidget * parent=0);
     QGraphicsScene * scene;
     mario * Mario;
+    platform *platform1;
 
 
 

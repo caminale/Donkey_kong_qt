@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/image">
         <file>mario.png</file>
+        <file>marioDroite.png</file>
+        <file>marioGauche.png</file>
+        <file>platform.jpg</file>
     </qresource>
 </RCC>

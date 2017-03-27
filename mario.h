@@ -4,6 +4,7 @@
 #include <QGraphicsPixmapItem>
 #include <QObject>
 #include <QGraphicsItem>
+#include <QKeyEvent>
 //#include <QMediaPlayer>
 
 namespace Ui {
@@ -18,8 +19,14 @@ public:
   mario(QGraphicsItem * parent=0);
     ~mario();
 
+
 private:
     Ui::mario *ui;
+    QPixmap imageD;
+    QPixmap imageG;
+
+
+    void keyPressEvent(QKeyEvent *event);
 };
 
 #endif // MARIO_H
