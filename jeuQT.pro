@@ -14,12 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mario.cpp \
-    game.cpp
+    game.cpp \
+    platform.cpp
 
 HEADERS  += mario.h \
-    game.h
+    game.h \
+    platform.h
 
 FORMS    += mario.ui
 
 RESOURCES += \
-    res.qrc
+    ressources.qrc

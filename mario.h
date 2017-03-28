@@ -4,7 +4,8 @@
 #include <QGraphicsPixmapItem>
 #include <QObject>
 #include <QGraphicsItem>
-//#include <QMediaPlayer>
+#include <QKeyEvent>
+#include "platform.h"
 
 namespace Ui {
 class mario;
@@ -16,6 +17,7 @@ class mario : public QObject,public QGraphicsPixmapItem{
 
 public:
 
+
   mario(QGraphicsItem * parent=0);
   void keyPressEvent(QKeyEvent * event);
   int compteur=0;
@@ -26,13 +28,20 @@ public:
 
 
 public slots:
-
-  void move();
   int gestionCompteARebours();
-   void jump();
+  void jump();
+
 
 private:
     Ui::mario *ui;
+    QPixmap imageD;
+    QPixmap imageG;
+    QPixmap imageJ;
+    platform pf1;
+    void move();
+
+
+    //void keyPressEvent(QKeyEvent *event);
 };
 
 #endif // MARIO_H

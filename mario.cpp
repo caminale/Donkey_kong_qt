@@ -5,19 +5,47 @@
 #include <QTimer>
 #include <QtCore/qmath.h>
 #include <QDebug>
+#include <QImage>
+#include <QList>
+#include <typeinfo>
+#include "game.h"
 
 
-mario::mario(QGraphicsItem *parent): QGraphicsPixmapItem(parent)
+
+extern Game * game;
+
+mario::mario( QGraphicsItem *parent): QGraphicsPixmapItem(parent)
 {
 
-  QPixmap marioPix=QPixmap(":/image/mario3.gif");
-  setPixmap(marioPix);
-  timer = new QTimer(this);
-  mytimer = new QTimer(this);
-  connect(timer,SIGNAL(timeout()),this,SLOT( jump()));
-  connect(mytimer,SIGNAL(timeout()),this,SLOT( gestionCompteARebours()));
+//  QPixmap marioPix=QPixmap(":/image/marioJ1.jpg");
+//  setPixmap(marioPix);
+    QPixmap imageMario(":/images/marioJ1.jpg");
+    QPixmap imageMarioD(":/images/marioDroite.png");
+    QPixmap imageMarioG(":/images/marioGauche.png");
+    QPixmap imageMarioL1(":/images/marioL1.jpg");
+    QPixmap imageMarioJ1(":/images/marioJ1.jpg");
+    QPixmap imageMarioR1(":/images/marioR1.jpg");
+    QPixmap imageMarioR2(":/images/marioR2.jpg");
 
 
+    imageMario=imageMario.scaled(60,100,Qt::IgnoreAspectRatio);
+    imageMarioL1=imageMarioL1.scaled(60,100,Qt::IgnoreAspectRatio);
+    imageMarioJ1=imageMarioJ1.scaled(60,100,Qt::IgnoreAspectRatio);
+    imageMarioR1=imageMarioR1.scaled(60,100,Qt::IgnoreAspectRatio);
+    imageMarioR2=imageMarioR2.scaled(60,100,Qt::IgnoreAspectRatio);
+    imageMarioD=imageMarioD.scaled(60,100,Qt::IgnoreAspectRatio);
+    imageMarioG=imageMarioG.scaled(60,100,Qt::IgnoreAspectRatio);
+
+
+    setPixmap(imageMario);
+
+    imageD=imageMarioD;
+    imageG=imageMarioG;
+    imageJ=imageMarioJ1;
+    timer = new QTimer(this);
+    mytimer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()),this,SLOT( jump()));
+    connect(mytimer,SIGNAL(timeout()),this,SLOT( gestionCompteARebours()));
 }
 
 
@@ -29,10 +57,12 @@ void mario::keyPressEvent(QKeyEvent *event){
             //we test if mario jump
             if(inTheAir==false){
                 setPos(x()-10,y());//not jump-> normal mouvement
+                 setPixmap(this->imageG);
             }
 
             else{
                 keyLeftjump=true;//jump -> activation of a boolean read in jump function
+                 setPixmap(this->imageG);
             }
         }
     }
@@ -44,25 +74,26 @@ void mario::keyPressEvent(QKeyEvent *event){
             qDebug()<<"true or false : "<<inTheAir;
             if(inTheAir==false){
                 setPos(x()+10,y());
+                setPixmap(this->imageD);
             }
 
             else{
                 ketRightjump=true;
+                setPixmap(this->imageD);
+
             }
         }
 
     }
 
     else if (event->key() == Qt::Key_Space){
+        setPixmap(this->imageJ);
         timer->start(100);// move is called each every 1s
         mytimer->start(100);
+
     }
 }
 
-void mario::move(){
-
-
-}
 
 void mario::jump(){
 
@@ -113,4 +144,21 @@ int mario::gestionCompteARebours()
 
 }
 
+
+void mario::move()
+{
+    QList<QGraphicsItem *> colliding_items = collidingItems();
+
+    for (int i = 0, n = colliding_items.size(); i < n; ++i){
+
+    if (typeid(*(colliding_items[i])) == typeid(game->platform1)){
+
+       if(pos().y()>colliding_items[i]->pos().y())
+       {
+
+       }
+        return;
+    }
+    }
+}
 

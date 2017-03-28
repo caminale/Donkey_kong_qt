@@ -1,10 +1,12 @@
 <RCC>
     <qresource prefix="/images">
+        <file>platform.jpg</file>
         <file>marioR2.jpg</file>
         <file>marioR1.jpg</file>
         <file>marioL1.jpg</file>
         <file>marioJ1.jpg</file>
         <file>marioGauche.png</file>
         <file>marioDroite.png</file>
+        <file>mario.png</file>
     </qresource>
 </RCC>
