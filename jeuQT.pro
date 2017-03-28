@@ -24,4 +24,4 @@ HEADERS  += mario.h \
 FORMS    += mario.ui
 
 RESOURCES += \
-    res.qrc
+    ressources.qrc

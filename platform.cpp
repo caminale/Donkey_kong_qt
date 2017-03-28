@@ -2,7 +2,7 @@
 
 platform::platform()
 {
-    QPixmap imagePlatform(":/image/platform.jpg");
+    QPixmap imagePlatform(":/images/platform.jpg");
 
 
     imagePlatform=imagePlatform.scaled(300,60,Qt::IgnoreAspectRatio);
