@@ -15,6 +15,8 @@ public:
     QGraphicsScene * scene;
     mario * Mario;
     platform *platform1;
+    int gameHeight;
+    int gameWidth;
 
 
 

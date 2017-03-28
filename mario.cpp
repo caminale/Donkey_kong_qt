@@ -36,19 +36,8 @@ mario::~mario()
 
 void mario::move()
 {
-    QList<QGraphicsItem *> colliding_items = collidingItems();
+   // QList<platform *> colliding_items = collidingItems();
 
-    for (int i = 0, n = colliding_items.size(); i < n; ++i){
-
-    if (typeid(*(colliding_items[i])) == typeid(game->platform1)){
-
-       if(pos().y()>colliding_items[i]->pos().y())
-       {
-
-       }
-        return;
-    }
-    }
 }
 
 void mario::keyPressEvent(QKeyEvent *event){
@@ -56,17 +45,25 @@ void mario::keyPressEvent(QKeyEvent *event){
 
 
     if (event->key() == Qt::Key_Left){
-        if (pos().x() >0){
         setPixmap(this->imageG);
-
-        setPos(x()-10,y());
+        if (pos().x() >0)
+            {
+            if(pos().x()<game->platform1->pos().x()+300 && pos().x()>game->platform1->pos().x()+280&&pos().y()<game->platform1->pos().y()+60 && pos().y()+100>game->platform1->pos().y())
+            {    qDebug()<<"bloc gauche"; }
+        else setPos(x()-10,y());
         }
-    }
+            }
     else if (event->key() == Qt::Key_Right){
         setPixmap(this->imageD);
-        if (pos().x() + 60 < 800){
 
-        setPos(x()+10,y());
+        if (pos().x() + 60 < 1000){
+            if(pos().x()+60>game->platform1->pos().x()&& pos().x()+60<game->platform1->pos().x()+20&& pos().y()<game->platform1->pos().y()+60 && pos().y()+100>game->platform1->pos().y())
+            {
+                qDebug()<<"bloc droite";
+
+
+            }
+        else setPos(x()+10,y());
         }
     }
     else if (event->key() == Qt::Key_Up){
@@ -74,14 +71,10 @@ void mario::keyPressEvent(QKeyEvent *event){
     }
     else if (event->key() == Qt::Key_Down){
 
-
-            if(pos().x()+60>100&& pos().x()<100+300 && pos().y()+110> 100 && pos().y()+110< 100+60)
+            if(pos().x()+60>game->platform1->pos().x()&& pos().x()<game->platform1->pos().x()+300 && pos().y()+110>game->platform1->pos().y() && pos().y()+110<game->platform1->pos().y()+60)
             {
-
             }
             else setPos(x(),y()+10);
-
-
 
     }
 

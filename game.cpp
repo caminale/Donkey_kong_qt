@@ -4,7 +4,9 @@
 Game::Game(QWidget *parent)
 {
     scene = new QGraphicsScene();
-    scene->setSceneRect(0,0,800,600); // make the scene 800x600 instead of infinity by infinity (default)
+    int gameHeight=600;
+    int gameWidth=1000;
+    scene->setSceneRect(0,0,gameWidth,gameHeight); // make the scene 800x600 instead of infinity by infinity (default)
     //setBackgroundBrush(QBrush(QImage(":/images/mario.png")));
     setScene(scene);
     //create platform
