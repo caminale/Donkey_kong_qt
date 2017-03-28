@@ -20,6 +20,7 @@ public:
 
   mario(QGraphicsItem * parent=0);
   void keyPressEvent(QKeyEvent * event);
+  bool isOnPlatform();
   int compteur=0;
   QTimer * timer,*mytimer;
   bool inTheAir=false;

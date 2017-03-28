@@ -100,6 +100,15 @@ void mario::keyPressEvent(QKeyEvent *event){
 
     }
 }
+bool mario::isOnPlatform(){
+    if(pos().x()+60>game->platform1->pos().x()&& pos().x()<game->platform1->pos().x()+300 && pos().y()+110>game->platform1->pos().y() && pos().y()+110<game->platform1->pos().y()+60)
+    {
+
+
+        return true;
+    }
+
+}
 
 
 void mario::jump(){
@@ -111,11 +120,7 @@ void mario::jump(){
 
 
     if(pos().y()>20){
-        if(pos().x()+60>game->platform1->pos().x()&& pos().x()<game->platform1->pos().x()+300 && pos().y()+110>game->platform1->pos().y() && pos().y()+110<game->platform1->pos().y()+60)
-        {
 
-
-        }
 
         else {
             setPos(x(),y()+7.9*compteur*compteur - 19*compteur-22); //essaye pas de comprendre juju j'ai un peu modifié la constante de gravité
