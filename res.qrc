@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/image">
         <file>mario.png</file>
+        <file>mario2.png</file>
+        <file>mario3.gif</file>
     </qresource>
 </RCC>

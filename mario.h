@@ -1,6 +1,6 @@
 #ifndef MARIO_H
 #define MARIO_H
-
+#include <QTimer>
 #include <QGraphicsPixmapItem>
 #include <QObject>
 #include <QGraphicsItem>
@@ -15,8 +15,21 @@ class mario : public QObject,public QGraphicsPixmapItem{
     Q_OBJECT
 
 public:
+
   mario(QGraphicsItem * parent=0);
-    ~mario();
+  void keyPressEvent(QKeyEvent * event);
+  int compteur=0;
+  QTimer * timer,*mytimer;
+  bool inTheAir=false;
+  bool ketRightjump=false;
+  bool keyLeftjump=false;
+
+
+public slots:
+
+  void move();
+  int gestionCompteARebours();
+   void jump();
 
 private:
     Ui::mario *ui;
