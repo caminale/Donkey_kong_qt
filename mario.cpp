@@ -14,7 +14,7 @@
 #define width 60
 #define height 100
 #define g      9.81
-#define jumpSize 42
+#define jumpSize 49
 #define floor   700
 #define alpha   45
 #define jumpX   20
@@ -24,7 +24,7 @@
 extern Game * game;
 
 
-mario::mario( QGraphicsItem *parent): QGraphicsPixmapItem(parent)
+mario::mario(Game *gamu): QGraphicsPixmapItem(), myGame(gamu)
 {
     QPixmap marioRight1(":/images/marioPix/marioR1.png");
     QPixmap marioLeft1(":/images/marioPix/marioL1.png");
@@ -50,6 +50,12 @@ mario::mario( QGraphicsItem *parent): QGraphicsPixmapItem(parent)
     marioL3=marioLeft3;
     marioB=marioBack;
     setPixmap(imageMario);
+
+    platHeight=myGame->platList.at(1)->getPlatHeight();
+    platWidth=myGame->platList.at(1)->getPlatWidth();
+
+
+
     timerElapse=new QElapsedTimer();
     elapsGravity=new QElapsedTimer();
     timer = new QTimer(this);

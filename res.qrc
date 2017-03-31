@@ -8,5 +8,9 @@
         <file>marioPix/marioR1.png</file>
         <file>marioPix/marioR2.png</file>
         <file>marioPix/marioR3.png</file>
+        <file>Goomba.png</file>
+        <file>doorClosed.png</file>
+        <file>doorOpen.svg</file>
+        <file>platform.jpg</file>
     </qresource>
 </RCC>

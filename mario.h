@@ -8,6 +8,8 @@
 #include <QElapsedTimer>
 #include "platform.h"
 
+class Game;
+
 namespace Ui {
 class mario;
 }
@@ -19,7 +21,7 @@ class mario : public QObject,public QGraphicsPixmapItem{
 public:
 
 
-  mario(QGraphicsItem * parent=0);
+  mario(Game *);
   void keyPressEvent(QKeyEvent * event);
   void keyReleaseEvent(QKeyEvent *event);
 
@@ -52,6 +54,10 @@ private:
     QPixmap marioR3,marioB,marioF;
     void move();
     int t=0;
+    Game *myGame;
+    int platWidth;
+    int platHeight;
+
 };
 
 #endif // MARIO_H
