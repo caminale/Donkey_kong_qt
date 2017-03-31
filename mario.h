@@ -26,12 +26,6 @@ public:
 
 
 
-  bool inTheAir=false;
-  bool ketRightjump=false;
-  bool keyLeftjump=false;
-
-  bool jumpRight=false;
-  bool jumpLeft=false;
 public slots:
   void moove();
   void gravity();
@@ -44,22 +38,20 @@ public slots:
 private:
     Ui::mario *ui;
     QElapsedTimer *timerElapse,*elapsGravity;
-    QTimer * timer,*mytimer,*timerTrajectory,*timercollision,*timerPix,*timerGravity,*timerSupport;
+    QTimer * timer,*timerTrajectory,*timerPix,*timerGravity,*timerSupport;
     platform pf1;
     bool keyRight=false;
     bool keySpace=false;
     bool keyLeft=false;
-    bool inJump=false;
-    bool keyRspace=false;
+    bool inJump=false; 
+    bool jumpRight=false;
+    bool jumpLeft=false;
     int numberPix;
     QPixmap marioR2,marioR1,imageMario;
     QPixmap marioL1,marioL2,marioL3;
     QPixmap marioR3,marioB,marioF;
     void move();
     int t=0;
-
-
-    //void keyPressEvent(QKeyEvent *event);
 };
 
 #endif // MARIO_H

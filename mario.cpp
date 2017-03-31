@@ -18,7 +18,7 @@
 #define floor   700
 #define alpha   45
 #define jumpX   20
-#define init   0
+
 
 
 extern Game * game;
@@ -82,9 +82,6 @@ void mario::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Space){
         keySpace =true;
     }
-    if(event->key() == Qt::Key_Space && event->key() == Qt::Key_Right){
-        keyRspace=true;
-    }
 }
 
 void mario::keyReleaseEvent(QKeyEvent *event){
@@ -96,9 +93,6 @@ void mario::keyReleaseEvent(QKeyEvent *event){
     }
     if(event->key() == Qt::Key_Left){
         keyLeft=false;
-    }
-    if(event->key() == Qt::Key_Space && event->key() == Qt::Key_Right){
-        keyRspace=false;
     }
 }
 
