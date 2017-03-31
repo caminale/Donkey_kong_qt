@@ -8,5 +8,6 @@
         <file>marioPix/marioR1.png</file>
         <file>marioPix/marioR2.png</file>
         <file>marioPix/marioR3.png</file>
+        <file>platform.jpg</file>
     </qresource>
 </RCC>

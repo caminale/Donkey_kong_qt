@@ -207,12 +207,12 @@ void mario::trajectory(){
         setPos(x(),game->getPlatform1()->pos().y()-height);
         inJump=false;
     }
-    if(pos().y()<game->getPlatform1()->pos().y()+10){
-        setPos(x(),game->getPlatform1()->pos().y()-height);
-        timerTrajectory->stop();
-        timerGravity->start();
-        inJump=false;
-    }
+//    if(pos().y()<game->getPlatform1()->pos().y()+10){
+//        setPos(x(),game->getPlatform1()->pos().y()-height);
+//        timerTrajectory->stop();
+//        timerGravity->start();
+//        inJump=false;
+//    }
 
 //    qDebug() << "position des y" << pos().y() ;
 //    qDebug() << "The slow operation took" << timerElapse->elapsed() << "milliseconds";

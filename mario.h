@@ -32,7 +32,7 @@ public slots:
   bool isOnPlatform();
   void trajectory();
   void managePix();
-  bool onSupport();
+  void onSupport();
 
 
 private:
@@ -46,6 +46,7 @@ private:
     bool inJump=false; 
     bool jumpRight=false;
     bool jumpLeft=false;
+    bool collision=true;
     int numberPix;
     QPixmap marioR2,marioR1,imageMario;
     QPixmap marioL1,marioL2,marioL3;
