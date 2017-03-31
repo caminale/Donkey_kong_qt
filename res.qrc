@@ -8,6 +8,12 @@
         <file>marioPix/marioR1.png</file>
         <file>marioPix/marioR2.png</file>
         <file>marioPix/marioR3.png</file>
+<<<<<<< HEAD
+=======
+        <file>Goomba.png</file>
+        <file>doorClosed.png</file>
+        <file>doorOpen.svg</file>
+>>>>>>> ac8e9a425f6ff7e7b418a4462103d9011847c1f3
         <file>platform.jpg</file>
     </qresource>
 </RCC>

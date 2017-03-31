@@ -15,11 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mario.cpp \
     game.cpp \
-    platform.cpp
+    platform.cpp \
+    goomba.cpp
 
 HEADERS  += mario.h \
     game.h \
-    platform.h
+    platform.h \
+    goomba.h
 
 FORMS    += mario.ui
 
