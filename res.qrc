@@ -1,10 +1,12 @@
 <RCC>
     <qresource prefix="/images">
-        <file>marioR2.jpg</file>
-        <file>marioR1.jpg</file>
-        <file>marioL1.jpg</file>
-        <file>marioJ1.jpg</file>
-        <file>marioGauche.png</file>
-        <file>marioDroite.png</file>
+        <file>marioPix/marioB.png</file>
+        <file>marioPix/marioF.png</file>
+        <file>marioPix/marioL1.png</file>
+        <file>marioPix/marioL2.png</file>
+        <file>marioPix/marioL3.png</file>
+        <file>marioPix/marioR1.png</file>
+        <file>marioPix/marioR2.png</file>
+        <file>marioPix/marioR3.png</file>
     </qresource>
 </RCC>

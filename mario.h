@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QGraphicsItem>
 #include <QKeyEvent>
+#include <QElapsedTimer>
 #include "platform.h"
 
 namespace Ui {
@@ -20,26 +21,42 @@ public:
 
   mario(QGraphicsItem * parent=0);
   void keyPressEvent(QKeyEvent * event);
-  bool isOnPlatform();
-  int compteur=0;
-  QTimer * timer,*mytimer;
+  void keyReleaseEvent(QKeyEvent *event);
+
+
+
+
   bool inTheAir=false;
   bool ketRightjump=false;
   bool keyLeftjump=false;
 
-
+  bool jumpRight=false;
+  bool jumpLeft=false;
 public slots:
-  int gestionCompteARebours();
-  void jump();
+  void moove();
+  void gravity();
+  bool isOnPlatform();
+  void trajectory();
+  void managePix();
+  bool onSupport();
 
 
 private:
     Ui::mario *ui;
-    QPixmap imageD;
-    QPixmap imageG;
-    QPixmap imageJ;
+    QElapsedTimer *timerElapse,*elapsGravity;
+    QTimer * timer,*mytimer,*timerTrajectory,*timercollision,*timerPix,*timerGravity,*timerSupport;
     platform pf1;
+    bool keyRight=false;
+    bool keySpace=false;
+    bool keyLeft=false;
+    bool inJump=false;
+    bool keyRspace=false;
+    int numberPix;
+    QPixmap marioR2,marioR1,imageMario;
+    QPixmap marioL1,marioL2,marioL3;
+    QPixmap marioR3,marioB,marioF;
     void move();
+    int t=0;
 
 
     //void keyPressEvent(QKeyEvent *event);

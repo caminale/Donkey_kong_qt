@@ -13,11 +13,11 @@ Game::Game(QWidget *parent)
     setScene(scene);
     //create platform
     platform1 = new platform();
-    platform1->setPos(500,500);
+    platform1->setPos(500,600);
 
     // create the player
     Mario = new mario();
-    Mario->setPos(400,400); // TODO generalize to always be in the middle bottom of screen
+    Mario->setPos(530,200); // TODO generalize to always be in the middle bottom of screen
 
     // make the player focusable and set it to be the current focus
     Mario->setFlag(QGraphicsItem::ItemIsFocusable);
@@ -27,4 +27,14 @@ Game::Game(QWidget *parent)
     scene->addItem(platform1);
 
     show();
+}
+
+platform *Game::getPlatform1() const
+{
+    return platform1;
+}
+
+void Game::setPlatform1(platform *value)
+{
+    platform1 = value;
 }

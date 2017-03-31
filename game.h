@@ -12,16 +12,21 @@ class Game: public QGraphicsView{
 
 public:
     explicit  Game(QWidget * parent=0);
+
+
+
+
+    platform *getPlatform1() const;
+
+    void setPlatform1(platform *value);
+
+private:
     QGraphicsScene * scene;
     mario * Mario;
     platform *platform1;
     int gameHeight;
     int gameWidth;
 
-
-
-
-private:
 };
 
 #endif // GAME_H
