@@ -14,18 +14,12 @@
 #define width 60
 #define height 100
 #define g      9.81
-<<<<<<< HEAD
 #define jumpSize 52
-=======
-#define jumpSize 49
->>>>>>> ac8e9a425f6ff7e7b418a4462103d9011847c1f3
 #define floor   700
 #define alpha   45
 #define jumpX   20
 
 
-
-extern Game * game;
 
 
 mario::mario(Game *gamu): QGraphicsPixmapItem(), myGame(gamu)
@@ -73,7 +67,7 @@ mario::mario(Game *gamu): QGraphicsPixmapItem(), myGame(gamu)
     connect(timerPix,SIGNAL(timeout()),this,SLOT(managePix()));
     connect(timerSupport,SIGNAL(timeout()),this,SLOT(onSupport()));
 
-    timer->start(50);
+    timer->start(20);
     timerPix->start(40);
     timerSupport->start(50);
 
@@ -161,15 +155,6 @@ void mario::onSupport(){
         timerGravity->stop();
         setPos(x(),floor);
     }
-    else if(this->collidesWithItem(game->getPlatform1())){
-        if(pos().y()>=game->getPlatform1()->pos().y()-height){
-            collision=true;
-            qDebug()<<"tu touches la brique";
-            timerGravity->stop();
-            setPos(x(),game->getPlatform1()->pos().y()-height+20);
-        }
-    }
-
     else{
     qDebug()<<"tu touches rien";
     elapsGravity->start();
@@ -177,12 +162,24 @@ void mario::onSupport(){
     collision=false;
 
     }
+    for(int i=0;i<3;i++){
+     if(this->collidesWithItem(myGame->platList.at(i))){
+        if(pos().y()>=myGame->platList.at(i)->pos().y()-height){
+            collision=true;
+            qDebug()<<"tu touches la brique";
+            timerGravity->stop();
+            setPos(x(),myGame->platList.at(i)->pos().y()-height+20);
+        }
+    }
+    }
+
+
 }
 
 void mario::gravity(){
 
         qreal t=elapsGravity->elapsed()/100;
-        if(keySpace==false && collision==false){
+        if(keySpace==false && collision==false && inJump==false){
         qDebug()<<"yoloooooooooooooooooooooooooooooooooooooooooooooo          "<<t;
             qreal marioY=-g*pow(t,2);
             setPos(x(),y()+22);
@@ -212,24 +209,30 @@ void mario::trajectory(){
         setPos(x(),floor);
         inJump=false;
     }
-    if(this->collidesWithItem(game->getPlatform1())){
-        timerTrajectory->stop();
-        setPos(x(),game->getPlatform1()->pos().y()-height);
-        inJump=false;
-    }
-    if(pos().y()<game->getPlatform1()->pos().y()+10){
-        setPos(x(),game->getPlatform1()->pos().y()-height);
-        timerTrajectory->stop();
-        timerGravity->start();
-        inJump=false;
-    }
+    for(int i=0;i<3;i++){
+        if(this->collidesWithItem(myGame->platList.at(i))){
+            timerTrajectory->stop();
+            setPos(x(),myGame->platList.at(i)->pos().y()-height);
+            timerTrajectory->stop();
+            inJump=false;
+        }
+        else if(pos().y()<myGame->platList.at(i)->pos().y()+10&& this->collidesWithItem(myGame->platList.at(i))){
+            setPos(x(),y()-marioY);
+            qDebug()<<"yoloooooooooooooooooooooooooooooooooooooooooooooo          ";
+           //timerGravity->start();
+            inJump=false;
+        }
+//       else if(this->collidesWithItem(myGame->platList.at(i) &&  pos().y()<myGame->platList.at(i)->pos().y()-70))
+//            setPos(x(),y()-marioY);
+//  }
 
 //    qDebug() << "position des y" << pos().y() ;
 //    qDebug() << "The slow operation took" << timerElapse->elapsed() << "milliseconds";
     qDebug() << "t vaut " << t << "milliseconds";
 }
-void mario::managePix()
-{
+}
+void mario::managePix(){
+
     switch(this->numberPix){
         case 0 :
             setPixmap(marioR2);
@@ -294,7 +297,7 @@ void mario::managePix()
 }
 bool mario::isOnPlatform(){
 
-   return this->collidesWithItem(game->getPlatform1());
+   return this->collidesWithItem(myGame->getPlatform1());
 
 }
 

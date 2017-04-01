@@ -2,7 +2,7 @@
 
 platform::platform()
 {
-    QPixmap imagePlatform(":/images/platform.jpg");
+    QPixmap imagePlatform(":/images/marioPix/platform.jpg");
 
     platH=60;
     platW=700;

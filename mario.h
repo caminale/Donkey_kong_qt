@@ -21,7 +21,7 @@ class mario : public QObject,public QGraphicsPixmapItem{
 public:
 
 
-  mario(Game *);
+  mario(Game* );
   void keyPressEvent(QKeyEvent * event);
   void keyReleaseEvent(QKeyEvent *event);
 
@@ -45,7 +45,7 @@ private:
     bool keyRight=false;
     bool keySpace=false;
     bool keyLeft=false;
-    bool inJump=false; 
+    bool inJump=false;
     bool jumpRight=false;
     bool jumpLeft=false;
     bool collision=true;
@@ -56,9 +56,8 @@ private:
     void move();
     int t=0;
     Game *myGame;
-    int platWidth;
     int platHeight;
-
+    int platWidth;
 };
 
 #endif // MARIO_H

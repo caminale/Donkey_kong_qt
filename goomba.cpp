@@ -98,7 +98,6 @@ bool Goomba::getPosition()
 
 
 
-
 }
 
 void Goomba::deleteGoomba()
