@@ -35,7 +35,7 @@ Game::Game(QWidget *parent)
 
     // create the player
     Mario = new mario(this);
-    Mario->setPos(530,200); // TODO generalize to always be in the middle bottom of screen
+    Mario->setPos(530,150); // TODO generalize to always be in the middle bottom of screen
 
     // make the player focusable and set it to be the current focus
     Mario->setFlag(QGraphicsItem::ItemIsFocusable);

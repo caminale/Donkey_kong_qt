@@ -6,6 +6,7 @@
 #include <QGraphicsItem>
 #include <QKeyEvent>
 #include <QElapsedTimer>
+#include <QPointF>
 #include "platform.h"
 
 class Game;
@@ -28,10 +29,15 @@ public:
 
 
 
+
+
+  platform *getSupport() const;
+
+  void setSupport(platform *value);
+
 public slots:
   void moove();
   void gravity();
-  bool isOnPlatform();
   void trajectory();
   void managePix();
   void onSupport();
@@ -48,7 +54,9 @@ private:
     bool inJump=false;
     bool jumpRight=false;
     bool jumpLeft=false;
-    bool collision=true;
+    bool collision=false;
+    bool collisionU=false;
+    QPointF PosotionInitiale;
     int numberPix;
     QPixmap marioR2,marioR1,imageMario;
     QPixmap marioL1,marioL2,marioL3;
@@ -58,6 +66,8 @@ private:
     Game *myGame;
     int platHeight;
     int platWidth;
+    platform *Support;
+    qreal puissanceSaut;
 };
 
 #endif // MARIO_H

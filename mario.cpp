@@ -13,10 +13,10 @@
 #define origin 0
 #define width 60
 #define height 100
-#define g      9.81
-#define jumpSize 52
+#define g     1000
+#define jumpSize 750
 #define floor   700
-#define alpha   45
+#define alpha   (M_PI/2)
 #define jumpX   20
 
 
@@ -57,19 +57,19 @@ mario::mario(Game *gamu): QGraphicsPixmapItem(), myGame(gamu)
     timerElapse=new QElapsedTimer();
     elapsGravity=new QElapsedTimer();
     timer = new QTimer(this);
-    timerGravity = new QTimer(this);
+
     timerTrajectory=new QTimer(this);
     timerPix=new QTimer(this);
     timerSupport=new QTimer(this);
     connect(timerTrajectory,SIGNAL(timeout()),this,SLOT( trajectory()));
-    connect(timerGravity,SIGNAL(timeout()),this,SLOT(gravity()));
+
     connect(timer,SIGNAL(timeout()),this,SLOT( moove()));
     connect(timerPix,SIGNAL(timeout()),this,SLOT(managePix()));
     connect(timerSupport,SIGNAL(timeout()),this,SLOT(onSupport()));
 
     timer->start(20);
     timerPix->start(40);
-    timerSupport->start(50);
+    timerSupport->start(20);
 
 }
 
@@ -102,203 +102,215 @@ void mario::keyReleaseEvent(QKeyEvent *event){
 void mario::moove(){
 
     if(keyLeft==true){
-
-        if(pos().x()>0){
-            if(inJump==true){
-                jumpLeft=true;
-            }
-            else if(keySpace==true){
-                inJump=true;
+        if(this->Support != nullptr && (!keySpace)){
+            setPos(x()-10,this->Support->pos().y() - height + 10);
+        }
+        else if(keySpace){
+                           qDebug()<<"lolooloo";
+            if(!timerTrajectory->isActive()){
+                puissanceSaut = jumpSize;
                 timerElapse->start();
-                timerTrajectory->start(50);
-            }
-            else{
-            setPos(x()-10,y());
+                timerTrajectory->start(20);
+                PosotionInitiale = this->pos();
             }
         }
-        else setPos(x(),y());
+
+        else moveBy(-10,0);
+
     }
+
+
     else if(keyRight==true){
 
-       if(pos().x()+width<1000){
-           if(inJump==true){
-               jumpRight=true;
-           }
-           else if(keySpace==true){
-               inJump=true;
-               timerElapse->start();
-               timerTrajectory->start(50);
-           }
-           else{
-           setPos(x()+10,y());
-           }
-       }
-       else setPos(x(),y());
-    }
-    else if(keySpace==true){
-        inJump=true;
-        if(timerTrajectory->isActive()){
+        if(pos().x()+width<1000 && (!keySpace)){
+            if(this->Support != nullptr){
+                setPos(x()+10,this->Support->pos().y() - height + 10);
+
+            }
         }
-        else{
-        timerElapse->start();
-        timerTrajectory->start(50);
+        else if(keySpace){
+                           qDebug()<<"lolooloo";
+            if(!timerTrajectory->isActive()){
+                puissanceSaut = jumpSize;
+                timerElapse->start();
+                timerTrajectory->start(20);
+                PosotionInitiale = this->pos();
+            }
         }
 
+        else moveBy(10,0);
+
+
     }
-    else setPos(x(),y());
+    else if(keySpace){
+
+        inJump=true;
+        if(!timerTrajectory->isActive()){
+            puissanceSaut = jumpSize;
+            timerElapse->start();
+            timerTrajectory->start(20);
+            PosotionInitiale = this->pos();
+        }
+    }
+    else if(keySpace==true && keyRight==true){
+        inJump=true;
+        if(!timerTrajectory->isActive()){
+            puissanceSaut = jumpSize;
+            timerElapse->start();
+            timerTrajectory->start(20);
+            PosotionInitiale = this->pos();
+        }
+    }
+
+
 
 }
 void mario::onSupport(){
-    if (pos().y()>=floor){
-        collision=true;
-        qDebug()<<"t'es sur le sol";
-        timerGravity->stop();
-        setPos(x(),floor);
-    }
-    else{
-    qDebug()<<"tu touches rien";
-    elapsGravity->start();
-    timerGravity->start(20);
-    collision=false;
-
-    }
+    bool isSupport = false;
     for(int i=0;i<3;i++){
-     if(this->collidesWithItem(myGame->platList.at(i))){
-        if(pos().y()>=myGame->platList.at(i)->pos().y()-height){
-            collision=true;
-            qDebug()<<"tu touches la brique";
-            timerGravity->stop();
-            setPos(x(),myGame->platList.at(i)->pos().y()-height+20);
+        if(this->collidesWithItem(myGame->platList.at(i))){
+            if (pos().y() < myGame->platList.at(i)->pos().y()){
+                this->setSupport(myGame->platList.at(i));
+                isSupport = true;
+                qDebug()<<pos().y();
+            }
+            else if (pos().y()+height > myGame->platList.at(i)->pos().y() + this->platHeight){
+                if(this->Support == nullptr){
+                    this->PosotionInitiale = this->pos();
+                    puissanceSaut=-60;
+                }
+            }
+
         }
     }
+
+    if (pos().y()>=floor){
+        isSupport = true;
     }
-
-
+    if(!isSupport){
+        gravity();
+        this->setSupport(nullptr);
+        qDebug()<<pos().y();
+    }
 }
 
+void mario::setSupport(platform *value)
+{
+    Support = value;
+}
+
+platform *mario::getSupport() const
+{
+    return Support;
+}
+
+
+
 void mario::gravity(){
-
-        qreal t=elapsGravity->elapsed()/100;
-        if(keySpace==false && collision==false && inJump==false){
-        qDebug()<<"yoloooooooooooooooooooooooooooooooooooooooooooooo          "<<t;
-            qreal marioY=-g*pow(t,2);
-            setPos(x(),y()+22);
-        }
-
-
+    if(!this->timerTrajectory->isActive()){
+        this->PosotionInitiale = this->pos();
+        puissanceSaut = 0;
+        timerTrajectory->start(20);
+        timerElapse->start();
+    }
 }
 
 void mario::trajectory(){
-    qreal t=timerElapse->elapsed()/100;
-    qreal marioY=-g*pow(t,2)+jumpSize*sin(alpha)*t;
-    qreal marioX=jumpX*cos(alpha)*t;
-    setPos(x(),y()-marioY);
-    inJump=true;
 
-    if(jumpRight==true){
-        setPos(x()+marioX,y());
+
+    qreal t=(qreal)timerElapse->elapsed()/1000;
+    qreal marioY = 0.5*g*pow(t,2) - puissanceSaut*qSin(alpha)*t + this->PosotionInitiale.y();
+    qreal marioX = puissanceSaut*qCos(alpha)*t + this->PosotionInitiale.x() ;
+    if(keyRight==true){
+        this->PosotionInitiale.setX(this->PosotionInitiale.x() + 10);
         jumpRight=false;
     }
-    else if(jumpLeft==true){
-        setPos(x()-marioX,y());
+    else if(keyLeft==true){
+        this->PosotionInitiale.setX(this->PosotionInitiale.x() - 10);
         jumpLeft=false;
     }
 
     if(pos().y()>floor){
         timerTrajectory->stop();
         setPos(x(),floor);
-        inJump=false;
     }
-    for(int i=0;i<3;i++){
-        if(this->collidesWithItem(myGame->platList.at(i))){
-            timerTrajectory->stop();
-            setPos(x(),myGame->platList.at(i)->pos().y()-height);
-            timerTrajectory->stop();
-            inJump=false;
-        }
-        else if(pos().y()<myGame->platList.at(i)->pos().y()+10&& this->collidesWithItem(myGame->platList.at(i))){
-            setPos(x(),y()-marioY);
-            qDebug()<<"yoloooooooooooooooooooooooooooooooooooooooooooooo          ";
-           //timerGravity->start();
-            inJump=false;
-        }
-//       else if(this->collidesWithItem(myGame->platList.at(i) &&  pos().y()<myGame->platList.at(i)->pos().y()-70))
-//            setPos(x(),y()-marioY);
-//  }
 
-//    qDebug() << "position des y" << pos().y() ;
-//    qDebug() << "The slow operation took" << timerElapse->elapsed() << "milliseconds";
-    qDebug() << "t vaut " << t << "milliseconds";
-}
+    if(this->Support!=nullptr){
+        if(marioY >= this->Support->pos().y() - height){
+            this->timerTrajectory->stop();
+            marioY = this->Support->pos().y() - height + 10;
+
+        }
+    }
+
+    setPos(marioX,marioY);
+
+
 }
 void mario::managePix(){
 
     switch(this->numberPix){
-        case 0 :
-            setPixmap(marioR2);
-        case 1 :
-            if (keyRight==true){
-                setPixmap(marioR1);
-            }
-            else if (keyLeft==true){
-                setPixmap( marioL1);
-            }
-            else setPixmap(marioB);
-            break;
-        case 2 :
-            if (keyRight==true){
-                setPixmap( marioR2);
-            }
-            else if (keyLeft==true){
-                setPixmap( marioL2);
-            }
-            else setPixmap(marioB);
-            break;
-        case 3 :
-            if (keyRight==true){
-                setPixmap( marioR3);
-            }
-            else if (keyLeft==true){
-                setPixmap( marioL2);
-            }
-            else setPixmap(marioB);
-            break;
-        case 4 :
-            if (keyRight==true){
-                setPixmap( marioR3);
-            }
-            else if (keyLeft==true){
+    case 0 :
+        setPixmap(marioR2);
+    case 1 :
+        if (keyRight==true){
+            setPixmap(marioR1);
+        }
+        else if (keyLeft==true){
+            setPixmap( marioL1);
+        }
+        else setPixmap(marioB);
+        break;
+    case 2 :
+        if (keyRight==true){
+            setPixmap( marioR2);
+        }
+        else if (keyLeft==true){
+            setPixmap( marioL2);
+        }
+        else setPixmap(marioB);
+        break;
+    case 3 :
+        if (keyRight==true){
+            setPixmap( marioR3);
+        }
+        else if (keyLeft==true){
+            setPixmap( marioL2);
+        }
+        else setPixmap(marioB);
+        break;
+    case 4 :
+        if (keyRight==true){
+            setPixmap( marioR3);
+        }
+        else if (keyLeft==true){
 
-                setPixmap(  marioL3);
-            }
-            else setPixmap(marioB);
-            break;
-        case 5 :
-            if (keyRight==true){
-                setPixmap( marioR1);
-            }
-            else if (keyLeft==true){
-               setPixmap( marioL1);
-            }
-            else setPixmap(marioB);
-            break;
-        case 6 :
-            if (keyRight==true){
-                this->setPixmap( marioR2);
-            }
-            else if (keyLeft==true){
-                setPixmap( marioL1);
-            }
-            else setPixmap(marioB);
-            break;
+            setPixmap(  marioL3);
+        }
+        else setPixmap(marioB);
+        break;
+    case 5 :
+        if (keyRight==true){
+            setPixmap( marioR1);
+        }
+        else if (keyLeft==true){
+            setPixmap( marioL1);
+        }
+        else setPixmap(marioB);
+        break;
+    case 6 :
+        if (keyRight==true){
+            this->setPixmap( marioR2);
+        }
+        else if (keyLeft==true){
+            setPixmap( marioL1);
+        }
+        else setPixmap(marioB);
+        break;
     }
     if(numberPix<6)numberPix++;
     else numberPix = 1;
 }
-bool mario::isOnPlatform(){
 
-   return this->collidesWithItem(myGame->getPlatform1());
-
-}
 
 
