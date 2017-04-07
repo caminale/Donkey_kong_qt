@@ -4,16 +4,13 @@
 Game::Game(QWidget *parent)
 {
     scene = new QGraphicsScene();
-
+    ival=2;
     int gameHeight=600;
     int gameWidth=1000;
     scene->setSceneRect(0,0,gameWidth,gameHeight); // make the scene 800x600 instead of infinity by infinity (default)
 
     //setBackgroundBrush(QBrush(QImage(":/images/mario.png")));
     setScene(scene);
-    //create platform
-
-
 
     platform *platform1= new platform;
     platform1->setPos(100,700);
@@ -23,7 +20,19 @@ Game::Game(QWidget *parent)
     platform3->setPos(0,200);
     platList.append(platform1);
     platList.append(platform2);
-    platList.append(platform3);
+    platList.append(platform3);;
+
+    Health *heart1= new Health(this);
+    heart1->setPos(0,0);
+    Health *heart2= new Health(this);
+    heart2->setPos(50,0);
+    Health *heart3= new Health(this);
+    heart3->setPos(100,0);
+
+
+    heartList.append(heart1);
+    heartList.append(heart2);
+    heartList.append(heart3);
 
     QTimer *timerSpawn=new QTimer(this);
     timerSpawn->start(2500);
@@ -45,7 +54,16 @@ Game::Game(QWidget *parent)
     scene->addItem(platform1);
     scene->addItem(platform2);
     scene->addItem(platform3);
+    scene->addItem(heart1);
+    scene->addItem(heart2);
+    scene->addItem(heart3);
     show();
+}
+void Game::decrease(){
+    if(ival>=0){
+        scene->removeItem(heartList.at(ival));
+        ival--;
+    }
 }
 
 platform *Game::getPlatform1() const
@@ -72,3 +90,4 @@ void Game::spawnGoomba()
 
 
 }
+

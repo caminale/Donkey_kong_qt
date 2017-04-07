@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mario.cpp \
     game.cpp \
     platform.cpp \
-    goomba.cpp
+    goomba.cpp \
+    health.cpp
 
 HEADERS  += mario.h \
     game.h \
     platform.h \
-    goomba.h
+    goomba.h \
+    health.h
 
 FORMS    += mario.ui
 

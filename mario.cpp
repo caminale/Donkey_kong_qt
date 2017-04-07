@@ -84,6 +84,9 @@ void mario::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Space){
         keySpace =true;
     }
+    if(event->key() == Qt::Key_E){
+        keyE =true;
+    }
 }
 
 void mario::keyReleaseEvent(QKeyEvent *event){
@@ -96,6 +99,9 @@ void mario::keyReleaseEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Left){
         keyLeft=false;
     }
+    if(event->key() == Qt::Key_E){
+        keyE =false;
+    }
 }
 
 
@@ -103,16 +109,7 @@ void mario::moove(){
 
     if(keyLeft==true){
         if(this->Support != nullptr && (!keySpace)){
-            setPos(x()-10,this->Support->pos().y() - height + 10);
-        }
-        else if(keySpace){
-                           qDebug()<<"lolooloo";
-            if(!timerTrajectory->isActive()){
-                puissanceSaut = jumpSize;
-                timerElapse->start();
-                timerTrajectory->start(20);
-                PosotionInitiale = this->pos();
-            }
+            setPos(x()-10,this->Support->pos().y() - height + 15);
         }
 
         else moveBy(-10,0);
@@ -120,21 +117,13 @@ void mario::moove(){
     }
 
 
-    else if(keyRight==true){
+     if(keyRight==true){
 
         if(pos().x()+width<1000 && (!keySpace)){
             if(this->Support != nullptr){
-                setPos(x()+10,this->Support->pos().y() - height + 10);
+                qDebug() << "support";
+                setPos(x()+10,this->Support->pos().y() - height + 15);
 
-            }
-        }
-        else if(keySpace){
-                           qDebug()<<"lolooloo";
-            if(!timerTrajectory->isActive()){
-                puissanceSaut = jumpSize;
-                timerElapse->start();
-                timerTrajectory->start(20);
-                PosotionInitiale = this->pos();
             }
         }
 
@@ -142,9 +131,7 @@ void mario::moove(){
 
 
     }
-    else if(keySpace){
-
-        inJump=true;
+     if(keySpace){
         if(!timerTrajectory->isActive()){
             puissanceSaut = jumpSize;
             timerElapse->start();
@@ -152,18 +139,9 @@ void mario::moove(){
             PosotionInitiale = this->pos();
         }
     }
-    else if(keySpace==true && keyRight==true){
-        inJump=true;
-        if(!timerTrajectory->isActive()){
-            puissanceSaut = jumpSize;
-            timerElapse->start();
-            timerTrajectory->start(20);
-            PosotionInitiale = this->pos();
-        }
+    if(keyE){
+
     }
-
-
-
 }
 void mario::onSupport(){
     bool isSupport = false;
@@ -178,6 +156,7 @@ void mario::onSupport(){
                 if(this->Support == nullptr){
                     this->PosotionInitiale = this->pos();
                     puissanceSaut=-60;
+                    myGame->decrease();
                 }
             }
 
@@ -204,7 +183,9 @@ platform *mario::getSupport() const
     return Support;
 }
 
+ void mario::backflip(){
 
+ }
 
 void mario::gravity(){
     if(!this->timerTrajectory->isActive()){
@@ -219,8 +200,16 @@ void mario::trajectory(){
 
 
     qreal t=(qreal)timerElapse->elapsed()/1000;
+    qreal teta=(qreal)timerElapse->elapsed()/100;
     qreal marioY = 0.5*g*pow(t,2) - puissanceSaut*qSin(alpha)*t + this->PosotionInitiale.y();
     qreal marioX = puissanceSaut*qCos(alpha)*t + this->PosotionInitiale.x() ;
+    qreal marioxB=this->PosotionInitiale.x() +10*cos(teta);
+    qreal marioyB=this->PosotionInitiale.y() +10*sin(teta);
+    qreal degre=(qreal)timerElapse->elapsed();
+    qDebug()<<"degre "<<degre;
+    if(degre==360){
+        degre=0;
+    }
     if(keyRight==true){
         this->PosotionInitiale.setX(this->PosotionInitiale.x() + 10);
         jumpRight=false;
@@ -242,8 +231,24 @@ void mario::trajectory(){
 
         }
     }
-
+    if(keyE==true){
+//        this->PosotionInitiale.setX(marioxB);
+//        this->PosotionInitiale.setY(marioyB);
+//        qDebug()<<"backflip";
+        if(keyLeft==true){
+        setTransformOriginPoint ( width/2,height/2);
+        setRotation(degre);
+        }
+        if(keyRight==true){
+            setTransformOriginPoint ( width/2,height/2);
+            setRotation(-degre);
+        }
+        if(this->Support!=nullptr){
+            setRotation(360);
+        }
+    }
     setPos(marioX,marioY);
+
 
 
 }
@@ -259,6 +264,7 @@ void mario::managePix(){
         else if (keyLeft==true){
             setPixmap( marioL1);
         }
+
         else setPixmap(marioB);
         break;
     case 2 :

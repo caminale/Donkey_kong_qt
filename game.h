@@ -7,6 +7,7 @@
 #include <QWidget>
 #include"goomba.h"
 #include <QGraphicsScene>
+#include"health.h"
 
 
 class mario;
@@ -17,22 +18,26 @@ class Game: public QGraphicsView{
 public:
     explicit  Game(QWidget * parent=0);
     QList<platform*> platList;
+    QList<Health*> heartList;
     platform *getPlatform1() const;
     void setPlatform1(platform *value);
-
-
+    QGraphicsScene * scene;
+    void decrease();
 public slots:
     void spawnGoomba();
 
 
 
 private:
-    QGraphicsScene * scene;
+
     mario * Mario;
     platform *platform1;
     int gameHeight;
     int gameWidth;
+    int ival;
     Goomba *goo1;
+    Health *health;
+
 
 
 };

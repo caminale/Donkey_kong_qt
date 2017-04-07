@@ -8,6 +8,8 @@
 #include <QElapsedTimer>
 #include <QPointF>
 #include "platform.h"
+#include "health.h"
+
 
 class Game;
 
@@ -41,6 +43,7 @@ public slots:
   void trajectory();
   void managePix();
   void onSupport();
+  void backflip();
 
 
 private:
@@ -51,11 +54,13 @@ private:
     bool keyRight=false;
     bool keySpace=false;
     bool keyLeft=false;
+    bool keyE=false;
     bool inJump=false;
     bool jumpRight=false;
     bool jumpLeft=false;
     bool collision=false;
     bool collisionU=false;
+
     QPointF PosotionInitiale;
     int numberPix;
     QPixmap marioR2,marioR1,imageMario;
@@ -64,6 +69,7 @@ private:
     void move();
     int t=0;
     Game *myGame;
+    Health *health;
     int platHeight;
     int platWidth;
     platform *Support;
