@@ -10,6 +10,7 @@
 #include"health.h"
 
 
+
 class mario;
 
 class Game: public QGraphicsView{

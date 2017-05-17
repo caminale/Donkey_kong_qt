@@ -29,7 +29,6 @@ Game::Game(QWidget *parent)
     Health *heart3= new Health(this);
     heart3->setPos(100,0);
 
-
     heartList.append(heart1);
     heartList.append(heart2);
     heartList.append(heart3);
@@ -64,6 +63,7 @@ void Game::decrease(){
         scene->removeItem(heartList.at(ival));
         ival--;
     }
+    else Mario->gameOver();
 }
 
 platform *Game::getPlatform1() const

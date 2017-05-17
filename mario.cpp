@@ -187,9 +187,59 @@ platform *mario::getSupport() const
 
  }
 
-void mario::gravity(){
-    if(!this->timerTrajectory->isActive()){
-        this->PosotionInitiale = this->pos();
+ QTimer *mario::getTimerSupport() const
+ {
+     return timerSupport;
+ }
+
+ void mario::setTimerSupport(QTimer *value)
+ {
+     timerSupport = value;
+ }
+
+ QTimer *mario::getTimerGravity() const
+ {
+     return timerGravity;
+ }
+
+ void mario::setTimerGravity(QTimer *value)
+ {
+     timerGravity = value;
+ }
+
+ QTimer *mario::getTimerPix() const
+ {
+     return timerPix;
+ }
+
+ void mario::setTimerPix(QTimer *value)
+ {
+     timerPix = value;
+ }
+
+ QTimer *mario::getTimerTrajectory() const
+ {
+     return timerTrajectory;
+ }
+
+ void mario::setTimerTrajectory(QTimer *value)
+ {
+     timerTrajectory = value;
+ }
+
+ QTimer *mario::getTimer() const
+ {
+     return timer;
+ }
+
+ void mario::setTimer(QTimer *value)
+ {
+     timer = value;
+ }
+
+ void mario::gravity(){
+     if(!this->timerTrajectory->isActive()){
+         this->PosotionInitiale = this->pos();
         puissanceSaut = 0;
         timerTrajectory->start(20);
         timerElapse->start();
@@ -316,6 +366,13 @@ void mario::managePix(){
     }
     if(numberPix<6)numberPix++;
     else numberPix = 1;
+}
+void mario::gameOver(){
+    timer->stop();
+    timerPix->stop();
+    timerSupport->stop();
+    timerTrajectory->stop();
+
 }
 
 

@@ -27,7 +27,7 @@ public:
   mario(Game* );
   void keyPressEvent(QKeyEvent * event);
   void keyReleaseEvent(QKeyEvent *event);
-
+  void gameOver();
 
 
 
@@ -36,6 +36,21 @@ public:
   platform *getSupport() const;
 
   void setSupport(platform *value);
+
+  QTimer *getTimer() const;
+  void setTimer(QTimer *value);
+
+  QTimer *getTimerTrajectory() const;
+  void setTimerTrajectory(QTimer *value);
+
+  QTimer *getTimerPix() const;
+  void setTimerPix(QTimer *value);
+
+  QTimer *getTimerGravity() const;
+  void setTimerGravity(QTimer *value);
+
+  QTimer *getTimerSupport() const;
+  void setTimerSupport(QTimer *value);
 
 public slots:
   void moove();
