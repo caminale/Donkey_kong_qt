@@ -17,5 +17,6 @@
         <file>marioPix/goombaL.png</file>
         <file>marioPix/bild.jpg</file>
         <file>marioPix/overworld_bg.png</file>
+        <file>marioPix/flag.png</file>
     </qresource>
 </RCC>
