@@ -15,5 +15,7 @@
         <file>marioPix/soundMarioJump.flac</file>
         <file>marioPix/goombaR.png</file>
         <file>marioPix/goombaL.png</file>
+        <file>marioPix/bild.jpg</file>
+        <file>marioPix/overworld_bg.png</file>
     </qresource>
 </RCC>

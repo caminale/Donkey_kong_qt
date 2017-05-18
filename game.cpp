@@ -9,7 +9,7 @@ Game::Game(QWidget *parent)
 
 
     scene = new QGraphicsScene();
-    setBackgroundBrush(QBrush(QImage("/home/julien/Images/bild.jpg")));
+    setBackgroundBrush(QBrush(QImage(":/Images/marioPix/bild.jpg")));
     ival=2;
     b_invinsible=false;
     int gameHeight=600;
@@ -34,10 +34,10 @@ Game::Game(QWidget *parent)
     platform3->setPos(0,200);
     platList.append(platform1);
     platList.append(platform2);
-    platList.append(platform3);;
+    platList.append(platform3);
 
     Health *heart1= new Health(this);
-    heart1->setPos(0,0);
+    heart1->setPos(-200,0);
     Health *heart2= new Health(this);
     heart2->setPos(50,0);
     Health *heart3= new Health(this);

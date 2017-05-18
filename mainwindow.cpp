@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     QPalette p;
     p = palette();
-    p.setBrush(QPalette::Window, QBrush(QPixmap("/home/julien/Images/overworld_bg.png")));
+    p.setBrush(QPalette::Window, QBrush(QPixmap(":/Images/marioPix/overworld_bg.png")));
     setPalette(p);
 }
 
