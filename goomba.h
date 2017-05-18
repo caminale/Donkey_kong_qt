@@ -3,6 +3,7 @@
 #include<QGraphicsPixmapItem>
 #include<QPixmap>
 #include<QTimer>
+#include "score.h"
 class Game;
 
 

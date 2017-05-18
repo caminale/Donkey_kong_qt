@@ -16,26 +16,43 @@ Game::Game(QWidget *parent)
     setScene(scene);
 
 
+
+
+
+    score=new Score();
+    score->setPos(1000,-200);
+
+
+
+
     platform *platform1= new platform;
-    platform1->setPos(100,700);
+    platform1->setPos(-450,0);
     platform *platform2= new platform;
-    platform2->setPos(600,450);
+    platform2->setPos(0,400);
     platform *platform3= new platform;
-    platform3->setPos(0,200);
+    platform3->setPos(600,150);
+    platform *platform4= new platform;
+    platform4->setPos(700,700);
     platList.append(platform1);
     platList.append(platform2);
     platList.append(platform3);
+    platList.append(platform4);
+
 
     Health *heart1= new Health(this);
-    heart1->setPos(-200,0);
+    heart1->setPos(1200,-200);
     Health *heart2= new Health(this);
-    heart2->setPos(50,0);
+    heart2->setPos(1250,-200);
     Health *heart3= new Health(this);
-    heart3->setPos(100,0);
+    heart3->setPos(1300,-200);
 
     heartList.append(heart1);
     heartList.append(heart2);
     heartList.append(heart3);
+
+
+    flag *f= new flag();
+    f->setPos(-350,-150);
 
     QTimer *timerSpawn=new QTimer(this);
     timerSpawn->start(2500);
@@ -46,24 +63,28 @@ Game::Game(QWidget *parent)
     connect(timerInvinsible,SIGNAL(timeout()),this,SLOT(endInvinsibility()));
 
 
-
-
-
     // create the player
     Mario = new mario(this);
-    Mario->setPos(530,150); // TODO generalize to always be in the middle bottom of screen
+    Mario->setPos(230,-150); // TODO generalize to always be in the middle bottom of screen
 
     // make the player focusable and set it to be the current focus
     Mario->setFlag(QGraphicsItem::ItemIsFocusable);
     Mario->setFocus();
     // add the player to the scene
     scene->addItem(Mario);
+
     scene->addItem(platform1);
     scene->addItem(platform2);
     scene->addItem(platform3);
+    scene->addItem(platform4);
+
     scene->addItem(heart1);
     scene->addItem(heart2);
     scene->addItem(heart3);
+
+    scene->addItem(f);
+
+    scene->addItem(score);
     show();
 }
 void Game::decrease(){
@@ -102,7 +123,7 @@ void Game::spawnGoomba()
 {
 
     Goomba *goomba = new Goomba(this);
-    goomba->setPos(190,150);
+    goomba->setPos(690,50);
     scene->addItem(goomba);
 
 }
@@ -110,8 +131,23 @@ void Game::endInvinsibility()
 {
     b_invinsible=false;
 }
+
 void Game::gameOver(){
     setBackgroundBrush(QBrush(QImage(":/images/black.jpg")));
 
+}
+
+
+
+
+void Game::win()
+{
+    qDebug() << "winner";
+
+}
+
+void Game::increaseScore()
+{
+    score->increase();
 }
 

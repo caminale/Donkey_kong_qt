@@ -9,7 +9,13 @@
 #include <QGraphicsScene>
 #include"health.h"
 #include <QDebug>
+<<<<<<< HEAD
 #include <QPixmap>
+=======
+#include "flag.h"
+#include "score.h"
+
+>>>>>>> 1cf2809d5d7a9781ba250bfbb26410386d4c5437
 
 
 
@@ -27,7 +33,12 @@ public:
     QGraphicsScene * scene;
     void decrease();
     mario *getMario();
+
     void gameOver();
+
+    void win();
+    void increaseScore();
+
 
 public slots:
     void spawnGoomba();
@@ -46,6 +57,7 @@ private:
     Health *health;
     bool b_invinsible;
     QTimer *timerInvinsible;
+    Score *score;
 
 
 

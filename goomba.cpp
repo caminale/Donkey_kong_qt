@@ -32,6 +32,7 @@ Goomba::Goomba(Game *g): QGraphicsPixmapItem(), g(g)
 
     this->posPlat=1;
 
+
 }
 
 
@@ -46,7 +47,7 @@ void Goomba::gravity(){
 }
 
 bool Goomba::isOnPlatform(){
-    for(int i=0;i<3;i++)
+    for(int i=0;i<4;i++)
     {
     if(pos().x()+platHeight>g->platList.at(i)->pos().x()&& pos().x()<g->platList.at(i)->pos().x()+platWidth && pos().y()+goombaH+10>g->platList.at(i)->pos().y() && pos().y()+goombaH+10<g->platList.at(i)->pos().y()+platHeight)
     {
@@ -72,6 +73,8 @@ void Goomba::move()
                     if(g->getMario()->getMarioY()+80<this->pos().y())
                     {
 
+
+                        g->increaseScore();
                     // remove goomba
                     scene()->removeItem(this);
                     // delete goomba
@@ -95,6 +98,7 @@ void Goomba::move()
                 if (typeid(*(colliding_items[i])) == typeid(mario)){
                     if(g->getMario()->getMarioY()+80<this->pos().y())
                     {
+                        g->increaseScore();
                     // remove goomba
                     scene()->removeItem(this);
                     // delete goomba
@@ -121,7 +125,7 @@ void Goomba::getPosition()
     {
         posPlat=2;
     }
-    if(this->pos().y()>450&&this->pos().x()<150)
+    if(this->pos().y()>450&&this->pos().x()<150 || this->pos().y()>350&&this->pos().x()<50 )
     {
         posPlat=3;
     }

@@ -14,14 +14,18 @@ SOURCES += main.cpp\
     platform.cpp \
     goomba.cpp \
     health.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    flag.cpp \
+    score.cpp
 
 HEADERS  += mario.h \
     game.h \
     platform.h \
     goomba.h \
     health.h \
-    mainwindow.h
+    mainwindow.h \
+    flag.h \
+    score.h
 
 FORMS    += mario.ui \
     mainwindow.ui

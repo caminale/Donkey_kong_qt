@@ -11,6 +11,7 @@
 #include <QSound>
 #include <QElapsedTimer>
 #include "game.h"
+#include"flag.h"
 #define origin 0
 #define width 60
 #define height 100
@@ -128,6 +129,13 @@ void mario::keyReleaseEvent(QKeyEvent *event){
 
 void mario::moove(){
 
+    QList<QGraphicsItem *> colliding_items = collidingItems();
+        for (int i = 0, n = colliding_items.size(); i < n; ++i){
+            if (typeid(*(colliding_items[i])) == typeid(flag)){
+                myGame->win();
+
+        }
+        }
     if(keyLeft==true){
         if(this->Support != nullptr && (!keySpace)){
             setPos(x()-10,this->Support->pos().y() - height + 15);
@@ -142,7 +150,6 @@ void mario::moove(){
 
         if(this->Support != nullptr && (!keySpace)){
             if(this->Support != nullptr){
-                qDebug() << "support";
                 setPos(x()+10,this->Support->pos().y() - height + 15);
 
             }
@@ -166,18 +173,16 @@ void mario::moove(){
 }
 void mario::onSupport(){
     bool isSupport = false;
-    for(int i=0;i<3;i++){
+    for(int i=0;i<4;i++){
         if(this->collidesWithItem(myGame->platList.at(i))){
             if (pos().y() < myGame->platList.at(i)->pos().y()){
                 this->setSupport(myGame->platList.at(i));
                 isSupport = true;
-                qDebug()<<pos().y();
             }
             else if (pos().y()+height > myGame->platList.at(i)->pos().y() + this->platHeight){
                 if(this->Support == nullptr){
                     this->PosotionInitiale = this->pos();
                     puissanceSaut=-60;
-                    myGame->decrease();
                 }
             }
 
