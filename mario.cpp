@@ -32,6 +32,10 @@ mario::mario(Game *gamu): QGraphicsPixmapItem(), myGame(gamu)
     QPixmap marioRight2(":/images/marioPix/marioR2.png");
     QPixmap marioRight3(":/images/marioPix/marioR3.png");
     QPixmap marioBack(":/images/marioPix/marioF.png");
+    QPixmap gameO(":/images/marioPix/gameOverBackGround.jpg");
+    QPixmap marioD1(":/images/marioPix/marioDab.png");
+    QPixmap marioD2(":/images/marioPix/marioDab2.png");
+    QPixmap marioD3(":/images/marioPix/marioDab3.png");
 
     marioRight1=marioRight1.scaled(width,height,Qt::IgnoreAspectRatio);
     marioRight2=marioRight2.scaled(width,height,Qt::IgnoreAspectRatio);
@@ -40,6 +44,10 @@ mario::mario(Game *gamu): QGraphicsPixmapItem(), myGame(gamu)
     marioLeft3=marioLeft3.scaled(width,height,Qt::IgnoreAspectRatio);
     marioRight3=marioRight3.scaled(width,height,Qt::IgnoreAspectRatio);
     marioBack=marioBack.scaled(width,height,Qt::IgnoreAspectRatio);
+    gameO=gameO.scaled(500,500,Qt::IgnoreAspectRatio);
+    marioD1=marioD1.scaled(width,height,Qt::IgnoreAspectRatio);
+    marioD2=marioD2.scaled(width,height,Qt::IgnoreAspectRatio);
+    marioD3=marioD3.scaled(width,height,Qt::IgnoreAspectRatio);
 
     marioR1=marioRight1;
     marioR2=marioRight2;
@@ -48,7 +56,11 @@ mario::mario(Game *gamu): QGraphicsPixmapItem(), myGame(gamu)
     marioL2=marioLeft2;
     marioL3=marioLeft3;
     marioB=marioBack;
-    setPixmap(imageMario);
+    q_gameOver = gameO;
+    marioDab1=marioD1;
+    marioDab2=marioD2;
+    marioDab3=marioD3;
+
 
     platHeight=myGame->platList.at(1)->getPlatHeight();
     platWidth=myGame->platList.at(1)->getPlatWidth();
@@ -62,11 +74,12 @@ mario::mario(Game *gamu): QGraphicsPixmapItem(), myGame(gamu)
     timerTrajectory=new QTimer(this);
     timerPix=new QTimer(this);
     timerSupport=new QTimer(this);
+    timerGameOver=new QTimer(this);
     connect(timerTrajectory,SIGNAL(timeout()),this,SLOT( trajectory()));
-
     connect(timer,SIGNAL(timeout()),this,SLOT( moove()));
     connect(timerPix,SIGNAL(timeout()),this,SLOT(managePix()));
     connect(timerSupport,SIGNAL(timeout()),this,SLOT(onSupport()));
+    connect(timerGameOver,SIGNAL(timeout()),this,SLOT(animationGameOver()));
 
     timer->start(20);
     timerPix->start(40);
@@ -127,7 +140,7 @@ void mario::moove(){
 
      if(keyRight==true){
 
-        if(pos().x()+width<1000 && (!keySpace)){
+        if(this->Support != nullptr && (!keySpace)){
             if(this->Support != nullptr){
                 qDebug() << "support";
                 setPos(x()+10,this->Support->pos().y() - height + 15);
@@ -136,7 +149,7 @@ void mario::moove(){
         }
 
         else moveBy(10,0);
-
+        qDebug()<<pos().x();
 
     }
      if(keySpace){
@@ -279,7 +292,7 @@ void mario::trajectory(){
 
     if(pos().y()>floor){
         timerTrajectory->stop();
-        setPos(x(),floor);
+//        setPos(x(),floor);
     }
 
     if(this->Support!=nullptr){
@@ -381,8 +394,62 @@ void mario::gameOver(){
     timerPix->stop();
     timerSupport->stop();
     timerTrajectory->stop();
+    setPixmap(q_gameOver);
+    setPos(800,50);
+    myGame->gameOver();
+    timerGameOver->start(500);
 
 }
 
+void mario :: animationGameOver(){
+    switch(this->numberPix){
+    case 0 :
+        setPixmap(marioDab1);
+        break;
+    case 1 :
+         setPixmap(marioDab2);
+        break;
+    case 2 :
+        setPixmap(marioDab3);
+        break;
+    case 3 :
+      setPixmap(q_gameOver);
+        break;
+//        else if (keyLeft==true){
+//            setPixmap( marioL2);
+//        }
+//        else setPixmap(marioB);
+//        break;
+//    case 4 :
+//        if (keyRight==true){
+//            setPixmap( marioR3);
+//        }
+//        else if (keyLeft==true){
 
+//            setPixmap(  marioL3);
+//        }
+//        else setPixmap(marioB);
+//        break;
+//    case 5 :
+//        if (keyRight==true){
+//            setPixmap( marioR1);
+//        }
+//        else if (keyLeft==true){
+//            setPixmap( marioL1);
+//        }
+//        else setPixmap(marioB);
+//        break;
+//    case 6 :
+//        if (keyRight==true){
+//            this->setPixmap( marioR2);
+//        }
+//        else if (keyLeft==true){
+//            setPixmap( marioL1);
+//        }
+//        else setPixmap(marioB);
+//        break;
+  }
+    if(numberPix<3)numberPix++;
+    else numberPix = 0;
+}
 

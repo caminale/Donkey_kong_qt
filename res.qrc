@@ -17,5 +17,10 @@
         <file>marioPix/goombaL.png</file>
         <file>marioPix/bild.jpg</file>
         <file>marioPix/overworld_bg.png</file>
+        <file>marioPix/gameOverBackGround.jpg</file>
+        <file>black.jpg</file>
+        <file>marioPix/marioDab.png</file>
+        <file>marioPix/marioDab2.png</file>
+        <file>marioPix/marioDab3.png</file>
     </qresource>
 </RCC>

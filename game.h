@@ -9,7 +9,7 @@
 #include <QGraphicsScene>
 #include"health.h"
 #include <QDebug>
-
+#include <QPixmap>
 
 
 
@@ -27,6 +27,8 @@ public:
     QGraphicsScene * scene;
     void decrease();
     mario *getMario();
+    void gameOver();
+
 public slots:
     void spawnGoomba();
     void endInvinsibility();
@@ -44,6 +46,7 @@ private:
     Health *health;
     bool b_invinsible;
     QTimer *timerInvinsible;
+
 
 
 

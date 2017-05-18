@@ -61,12 +61,13 @@ public slots:
   void managePix();
   void onSupport();
   void backflip();
+  void animationGameOver();
 
 
 private:
     Ui::mario *ui;
     QElapsedTimer *timerElapse,*elapsGravity;
-    QTimer * timer,*timerTrajectory,*timerPix,*timerGravity,*timerSupport;
+    QTimer * timer,*timerTrajectory,*timerPix,*timerGravity,*timerSupport, *timerGameOver;
     platform pf1;
     bool keyRight=false;
     bool keySpace=false;
@@ -83,6 +84,8 @@ private:
     QPixmap marioR2,marioR1,imageMario;
     QPixmap marioL1,marioL2,marioL3;
     QPixmap marioR3,marioB,marioF;
+    QPixmap marioDab1,marioDab2,marioDab3;
+    QPixmap q_gameOver;
     void move();
     int t=0;
     Game *myGame;

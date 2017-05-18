@@ -1,29 +1,19 @@
 #include "game.h"
 #include <QImage>
 #include <QSound>
-#include <QSoundEffect>
-#include <QMediaPlayer>
+
 Game::Game(QWidget *parent)
 {
-
-
-
     scene = new QGraphicsScene();
-    setBackgroundBrush(QBrush(QImage(":/Images/marioPix/bild.jpg")));
+    setBackgroundBrush(QBrush(QImage(":/images/marioPix/bild.jpg")));
     ival=2;
     b_invinsible=false;
+
     int gameHeight=600;
     int gameWidth=1000;
     scene->setSceneRect(0,0,gameWidth,gameHeight); // make the scene 800x600 instead of infinity by infinity (default)
 
     setScene(scene);
-
-
-
-
-
-
-
 
 
     platform *platform1= new platform;
@@ -55,8 +45,6 @@ Game::Game(QWidget *parent)
     timerInvinsible=new QTimer(this);
     connect(timerInvinsible,SIGNAL(timeout()),this,SLOT(endInvinsibility()));
 
-    QMediaPlayer *p= new QMediaPlayer;
-    p->setMedia(QUrl::fromLocalFile("/home/julien/Musique/2003 - FLAC - Live In Texas/02. Lying From You.flac"));
 
 
 
@@ -122,3 +110,8 @@ void Game::endInvinsibility()
 {
     b_invinsible=false;
 }
+void Game::gameOver(){
+    setBackgroundBrush(QBrush(QImage(":/images/black.jpg")));
+
+}
+
