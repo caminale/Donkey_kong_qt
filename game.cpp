@@ -1,16 +1,30 @@
 #include "game.h"
 #include <QImage>
-
+#include <QSound>
+#include <QSoundEffect>
+#include <QMediaPlayer>
 Game::Game(QWidget *parent)
 {
+
+
+
     scene = new QGraphicsScene();
+    setBackgroundBrush(QBrush(QImage("/home/julien/Images/bild.jpg")));
     ival=2;
+    b_invinsible=false;
     int gameHeight=600;
     int gameWidth=1000;
     scene->setSceneRect(0,0,gameWidth,gameHeight); // make the scene 800x600 instead of infinity by infinity (default)
 
-    //setBackgroundBrush(QBrush(QImage(":/images/mario.png")));
     setScene(scene);
+
+
+
+
+
+
+
+
 
     platform *platform1= new platform;
     platform1->setPos(100,700);
@@ -38,6 +52,12 @@ Game::Game(QWidget *parent)
     connect(timerSpawn,SIGNAL(timeout()),this,SLOT(spawnGoomba()));
 
 
+    timerInvinsible=new QTimer(this);
+    connect(timerInvinsible,SIGNAL(timeout()),this,SLOT(endInvinsibility()));
+
+    QMediaPlayer *p= new QMediaPlayer;
+    p->setMedia(QUrl::fromLocalFile("/home/julien/Musique/2003 - FLAC - Live In Texas/02. Lying From You.flac"));
+
 
 
 
@@ -60,8 +80,16 @@ Game::Game(QWidget *parent)
 }
 void Game::decrease(){
     if(ival>=0){
+        if(b_invinsible == false)
+        {
         scene->removeItem(heartList.at(ival));
         ival--;
+        b_invinsible=true;
+        timerInvinsible->start(3000);
+        }
+
+
+
     }
     else Mario->gameOver();
 }
@@ -76,18 +104,21 @@ void Game::setPlatform1(platform *value)
     platform1 = value;
 }
 
+mario *Game::getMario()
+{
+    return this->Mario;
+}
+
 
 void Game::spawnGoomba()
 {
-    //myDoor->doorValue=1;
 
-    this->goo1 = new Goomba(this);
-    this->goo1->setPos(190,150);
-    scene->addItem(goo1);
-
-
-
-
+    Goomba *goomba = new Goomba(this);
+    goomba->setPos(190,150);
+    scene->addItem(goomba);
 
 }
-
+void Game::endInvinsibility()
+{
+    b_invinsible=false;
+}

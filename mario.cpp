@@ -8,6 +8,7 @@
 #include <QImage>
 #include <QList>
 #include <typeinfo>
+#include <QSound>
 #include <QElapsedTimer>
 #include "game.h"
 #define origin 0
@@ -72,7 +73,14 @@ mario::mario(Game *gamu): QGraphicsPixmapItem(), myGame(gamu)
     timerSupport->start(20);
 
 }
-
+int mario::getMarioX()
+{
+    return this->pos().x();
+}
+int mario::getMarioY()
+{
+    return this->pos().y();
+}
 
 void mario::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Left){
@@ -295,6 +303,7 @@ void mario::trajectory(){
         }
         if(this->Support!=nullptr){
             setRotation(360);
+
         }
     }
     setPos(marioX,marioY);

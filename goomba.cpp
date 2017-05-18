@@ -1,6 +1,6 @@
 #include "goomba.h"
 #include"game.h"
-
+#include <typeinfo>
 
 Goomba::Goomba(Game *g): QGraphicsPixmapItem(), g(g)
 {
@@ -66,11 +66,46 @@ void Goomba::move()
     if(this->posPlat==1||this->posPlat==3)
     {
 
+        QList<QGraphicsItem *> colliding_items = collidingItems();
+            for (int i = 0, n = colliding_items.size(); i < n; ++i){
+                if (typeid(*(colliding_items[i])) == typeid(mario)){
+                    if(g->getMario()->getMarioY()+80<this->pos().y())
+                    {
+
+                    // remove goomba
+                    scene()->removeItem(this);
+                    // delete goomba
+                    delete this;
+                    return;
+                    }
+                    else{
+                        g->decrease();
+                    }
+                }
+            }
+
     setPos(x()+3,y());
     }
 
     if(this->posPlat==2)
     {
+
+        QList<QGraphicsItem *> colliding_items = collidingItems();
+            for (int i = 0, n = colliding_items.size(); i < n; ++i){
+                if (typeid(*(colliding_items[i])) == typeid(mario)){
+                    if(g->getMario()->getMarioY()+80<this->pos().y())
+                    {
+                    // remove goomba
+                    scene()->removeItem(this);
+                    // delete goomba
+                    delete this;
+                    return;
+                }
+                    else{
+                        g->decrease();
+                    }
+            }
+            }
 
     setPos(x()-3,y());
     }
@@ -79,7 +114,7 @@ void Goomba::move()
 }
 
 
-bool Goomba::getPosition()
+void Goomba::getPosition()
 {
 
     if(this->pos().y()<700&&this->pos().x()>1200)
@@ -96,6 +131,7 @@ bool Goomba::getPosition()
         this->deleteGoomba();
     }
 
+    else return;
 
 
 }

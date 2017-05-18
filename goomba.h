@@ -17,7 +17,7 @@ public slots:
   void gravity();
   bool isOnPlatform();
   void move();
-  bool getPosition();
+  void getPosition();
 
 
 private:
@@ -29,6 +29,9 @@ private:
     Game *g;
     int platHeight;
     int platWidth;
+    QPixmap imageGoombaR;
+    QPixmap imageGoombaL;
+
 
 };
 

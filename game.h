@@ -8,6 +8,8 @@
 #include"goomba.h"
 #include <QGraphicsScene>
 #include"health.h"
+#include <QDebug>
+
 
 
 
@@ -24,8 +26,10 @@ public:
     void setPlatform1(platform *value);
     QGraphicsScene * scene;
     void decrease();
+    mario *getMario();
 public slots:
     void spawnGoomba();
+    void endInvinsibility();
 
 
 
@@ -38,6 +42,8 @@ private:
     int ival;
     Goomba *goo1;
     Health *health;
+    bool b_invinsible;
+    QTimer *timerInvinsible;
 
 
 

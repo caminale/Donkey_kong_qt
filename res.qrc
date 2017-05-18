@@ -11,5 +11,9 @@
         <file>marioPix/platform.jpg</file>
         <file>Goomba.png</file>
         <file>marioPix/heart.png</file>
+        <file>marioPix/soundMarioJump.mp3</file>
+        <file>marioPix/soundMarioJump.flac</file>
+        <file>marioPix/goombaR.png</file>
+        <file>marioPix/goombaL.png</file>
     </qresource>
 </RCC>
